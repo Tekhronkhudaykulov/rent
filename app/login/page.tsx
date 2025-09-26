@@ -1,33 +1,34 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useRouter } from "next/navigation"
-import LoginForm from "@/components/login-form"
-import { Eye, EyeOff, User, Lock, Shield, AlertCircle } from 'lucide-react'
+import type React from "react";
+import { useRouter } from "next/navigation";
+import LoginForm from "@/components/login-form";
+import { Eye, EyeOff, User, Lock, Shield, AlertCircle } from "lucide-react";
+import { useState } from "react";
 
 interface LoginFormProps {
-  onLogin: (username: string, password: string) => void
+  onLogin: (username: string, password: string) => void;
 }
 
 const LoginPage = ({ onLogin }: LoginFormProps) => {
-  const router = useRouter()
+  const router = useRouter();
   const [form, setForm] = useState({
     username: "",
     password: "",
-  })
-  const [show, setShow] = useState(false)
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
+  });
+  const [show, setShow] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError("")
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
     // Call the onLogin function from props
-    onLogin(form.username, form.password)
-    setLoading(false)
-  }
+    onLogin(form.username, form.password);
+    setLoading(false);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4">
@@ -47,15 +48,21 @@ const LoginPage = ({ onLogin }: LoginFormProps) => {
             <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl mb-4 shadow-lg">
               <Shield className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">👨‍💻 Admin Panelga Kirish</h1>
-            <p className="text-gray-600 text-sm">Tizimga kirish uchun ma'lumotlaringizni kiriting</p>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+              👨‍💻 Admin Panelga Kirish
+            </h1>
+            <p className="text-gray-600 text-sm">
+              Tizimga kirish uchun ma'lumotlaringizni kiriting
+            </p>
           </div>
 
           {/* Error Message */}
           {error && (
             <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center gap-3 animate-shake">
               <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
-              <span className="text-red-700 text-sm font-medium">❌ {error}</span>
+              <span className="text-red-700 text-sm font-medium">
+                ❌ {error}
+              </span>
             </div>
           )}
 
@@ -63,7 +70,9 @@ const LoginPage = ({ onLogin }: LoginFormProps) => {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Username Field */}
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">Foydalanuvchi nomi</label>
+              <label className="block text-sm font-semibold text-gray-700">
+                Foydalanuvchi nomi
+              </label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                   <User className="w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
@@ -71,7 +80,9 @@ const LoginPage = ({ onLogin }: LoginFormProps) => {
                 <input
                   type="text"
                   value={form.username}
-                  onChange={(e) => setForm({ ...form, username: e.target.value })}
+                  onChange={(e) =>
+                    setForm({ ...form, username: e.target.value })
+                  }
                   className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-500 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 outline-none"
                   placeholder="Username kiriting"
                   required
@@ -81,7 +92,9 @@ const LoginPage = ({ onLogin }: LoginFormProps) => {
 
             {/* Password Field */}
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">Parol</label>
+              <label className="block text-sm font-semibold text-gray-700">
+                Parol
+              </label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                   <Lock className="w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
@@ -89,7 +102,9 @@ const LoginPage = ({ onLogin }: LoginFormProps) => {
                 <input
                   type={show ? "text" : "password"}
                   value={form.password}
-                  onChange={(e) => setForm({ ...form, password: e.target.value })}
+                  onChange={(e) =>
+                    setForm({ ...form, password: e.target.value })
+                  }
                   className="w-full pl-12 pr-12 py-4 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-500 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 outline-none"
                   placeholder="Parolingizni kiriting"
                   required
@@ -99,7 +114,11 @@ const LoginPage = ({ onLogin }: LoginFormProps) => {
                   onClick={() => setShow((prev) => !prev)}
                   className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
                 >
-                  {show ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {show ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
                 </button>
               </div>
             </div>
@@ -113,7 +132,10 @@ const LoginPage = ({ onLogin }: LoginFormProps) => {
                 />
                 <span className="ml-2 text-sm text-gray-600">Eslab qolish</span>
               </label>
-              <button type="button" className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors">
+              <button
+                type="button"
+                className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors"
+              >
                 Parolni unutdingizmi?
               </button>
             </div>
@@ -140,13 +162,17 @@ const LoginPage = ({ onLogin }: LoginFormProps) => {
 
           {/* Footer */}
           <div className="mt-8 pt-6 border-t border-gray-100 text-center">
-            <p className="text-xs text-gray-500">© 2025 Admin Panel. Barcha huquqlar himoyalangan.</p>
+            <p className="text-xs text-gray-500">
+              © 2025 Admin Panel. Barcha huquqlar himoyalangan.
+            </p>
           </div>
         </div>
 
         {/* Demo Credentials */}
         <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-xl">
-          <h3 className="text-sm font-semibold text-blue-900 mb-2">🔑 Demo ma'lumotlar:</h3>
+          <h3 className="text-sm font-semibold text-blue-900 mb-2">
+            🔑 Demo ma'lumotlar:
+          </h3>
           <div className="text-xs text-blue-700 space-y-1">
             <p>
               <strong>Username:</strong> admin
@@ -158,7 +184,7 @@ const LoginPage = ({ onLogin }: LoginFormProps) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;

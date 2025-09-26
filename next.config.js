@@ -13,6 +13,6 @@ const nextConfig = {
     domains: ["blob.v0.dev"],
     unoptimized: true,
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
