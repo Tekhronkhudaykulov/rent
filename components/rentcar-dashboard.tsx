@@ -61,19 +61,17 @@ export function RentcarDashboard() {
     const selectedDriver = drivers.find((d) => d.id === selectedDriverId);
     if (selectedCar && selectedDriver) {
       alert(
-        `Аренда успешно оформлена!\nВодитель: ${
+        `Kiralama başarıyla tamamlandı!\nSürücü: ${
           selectedDriver.fullName
-        }\nАвтомобиль: ${
-          selectedCar.model
-        }\nОбщая стоимость: ${new Intl.NumberFormat("uz-UZ").format(
-          selectedCar.totalPrice
-        )} сум`
+        }\nAraç: ${selectedCar.model}\nToplam fiyat: ${new Intl.NumberFormat(
+          "tr-TR"
+        ).format(selectedCar.totalPrice)} ₺`
       );
       // Reset selections
       setSelectedCar(null);
       setSelectedDriverId(null);
     } else {
-      alert("Пожалуйста, выберите водителя и автомобиль для оформления аренды");
+      alert("Lütfen kiralama için bir sürücü ve araç seçin");
     }
   };
 
@@ -92,7 +90,7 @@ export function RentcarDashboard() {
           <div className="text-center space-y-2">
             <h1 className="text-4xl font-bold text-gray-900">RENTCAR CRM</h1>
             <p className="text-lg text-gray-600">
-              Система управления арендой автомобилей
+              Araç kiralama yönetim sistemi
             </p>
           </div>
 
@@ -112,11 +110,11 @@ export function RentcarDashboard() {
                         <CardTitle className="flex items-center gap-2">
                           <Users className="h-6 w-6 hidden md:inline" />
                           <span className="hidden md:inline">
-                            Водители ({drivers.length})
+                            Sürücüler ({drivers.length})
                           </span>
                           {selectedDriverId && (
                             <span className="text-sm text-green-600 font-normal">
-                              - выбран: {selectedDriver?.fullName}
+                              - seçilen: {selectedDriver?.fullName}
                             </span>
                           )}
                         </CardTitle>
@@ -125,7 +123,7 @@ export function RentcarDashboard() {
                           className="flex items-center gap-2 md:w-max w-full"
                         >
                           <UserPlus className="h-4 w-4" />
-                          Добавить водителя
+                          Sürücü ekle
                         </Button>
                       </div>
                     </CardHeader>
@@ -135,8 +133,8 @@ export function RentcarDashboard() {
                           <Users className="h-12 w-12 mx-auto mb-4 opacity-50" />
                           <p>
                             {drivers.length === 0
-                              ? "Нет добавленных водителей"
-                              : "Нет водителей по заданным фильтрам"}
+                              ? "Hiç sürücü eklenmedi"
+                              : "Filtrelere uygun sürücü bulunamadı"}
                           </p>
                         </div>
                       ) : (
@@ -175,10 +173,11 @@ export function RentcarDashboard() {
                                     {filteredDrivers[0].fullName}
                                   </h3>
                                   <p className="text-xs text-gray-600">
-                                    Паспорт: {filteredDrivers[0].passportSeries}
+                                    Pasaport:{" "}
+                                    {filteredDrivers[0].passportSeries}
                                   </p>
                                   <p className="text-xs text-gray-600">
-                                    Права: {filteredDrivers[0].driverLicense}
+                                    Ehliyet: {filteredDrivers[0].driverLicense}
                                   </p>
                                   <p className="text-xs text-gray-600">
                                     {filteredDrivers[0].citizenship}
@@ -186,7 +185,7 @@ export function RentcarDashboard() {
                                 </div>
                                 {selectedDriverId === filteredDrivers[0].id && (
                                   <div className="text-green-600 font-medium text-sm">
-                                    Активен
+                                    Aktif
                                   </div>
                                 )}
                               </div>
@@ -222,13 +221,13 @@ export function RentcarDashboard() {
                       <div className="flex items-center gap-2">
                         <CheckCircle className="h-6 w-6 text-green-600" />
                         <h3 className="font-semibold text-green-800">
-                          Статус оформления
+                          İşlem durumu
                         </h3>
                       </div>
 
                       <div className="space-y-2 text-sm">
                         <div className="flex items-center justify-between">
-                          <span>Водитель:</span>
+                          <span>Sürücü:</span>
                           <span
                             className={
                               selectedDriverId
@@ -238,11 +237,11 @@ export function RentcarDashboard() {
                           >
                             {selectedDriver
                               ? selectedDriver.fullName
-                              : "Не выбран"}
+                              : "Seçilmedi"}
                           </span>
                         </div>
                         <div className="flex items-center justify-between">
-                          <span>Автомобиль:</span>
+                          <span>Araç:</span>
                           <span
                             className={
                               selectedCar
@@ -250,17 +249,17 @@ export function RentcarDashboard() {
                                 : "text-gray-500"
                             }
                           >
-                            {selectedCar ? selectedCar.model : "Не выбран"}
+                            {selectedCar ? selectedCar.model : "Seçilmedi"}
                           </span>
                         </div>
                         {selectedCar && (
                           <div className="flex items-center justify-between">
-                            <span>Стоимость:</span>
+                            <span>Fiyat:</span>
                             <span className="text-green-600 font-bold">
-                              {new Intl.NumberFormat("uz-UZ").format(
+                              {new Intl.NumberFormat("tr-TR").format(
                                 selectedCar.totalPrice
                               )}{" "}
-                              сум
+                              ₺
                             </span>
                           </div>
                         )}
@@ -272,10 +271,10 @@ export function RentcarDashboard() {
                         className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400"
                       >
                         {selectedCar && selectedDriverId
-                          ? "Оформить аренду"
-                          : `Выберите ${!selectedDriverId ? "водителя" : ""}${
-                              !selectedDriverId && !selectedCar ? " и " : ""
-                            }${!selectedCar ? "автомобиль" : ""}`}
+                          ? "Kiralamayı tamamla"
+                          : `Seçiniz ${!selectedDriverId ? "sürücü" : ""}${
+                              !selectedDriverId && !selectedCar ? " ve " : ""
+                            }${!selectedCar ? "araç" : ""}`}
                       </Button>
                     </div>
                   </CardContent>

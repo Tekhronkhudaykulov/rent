@@ -1,23 +1,26 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import type { Car } from "@/types/car.types"
-import { mockCars } from "@/data/mock-data"
-import { CarIcon, Fuel, Settings, Calendar, CheckCircle } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import type { Car } from "@/types/car.types";
+import { mockCars } from "@/data/mock-data";
+import { CarIcon, Fuel, Settings, Calendar, CheckCircle } from "lucide-react";
 
 interface CarSelectionProps {
-  onCarSelect: (car: Car) => void
-  selectedCarId?: string
+  onCarSelect: (car: Car) => void;
+  selectedCarId?: string;
 }
 
-export function CarSelection({ onCarSelect, selectedCarId }: CarSelectionProps) {
+export function CarSelection({
+  onCarSelect,
+  selectedCarId,
+}: CarSelectionProps) {
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <CarIcon className="h-6 w-6" />
-          Выбор автомобиля ({mockCars.filter((car) => car.available).length} доступно)
+          Araç Seçimi ({mockCars.filter((car) => car.available).length} uygun)
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -26,7 +29,9 @@ export function CarSelection({ onCarSelect, selectedCarId }: CarSelectionProps) 
             <Card
               key={car.id}
               className={`cursor-pointer transition-all hover:shadow-md ${
-                selectedCarId === car.id ? "ring-2 ring-blue-500 bg-blue-50" : "hover:bg-gray-50"
+                selectedCarId === car.id
+                  ? "ring-2 ring-blue-500 bg-blue-50"
+                  : "hover:bg-gray-50"
               } ${!car.available ? "opacity-60 cursor-not-allowed" : ""}`}
               onClick={() => car.available && onCarSelect(car)}
             >
@@ -46,7 +51,7 @@ export function CarSelection({ onCarSelect, selectedCarId }: CarSelectionProps) 
                     )}
                     {!car.available && (
                       <div className="absolute inset-0 bg-black bg-opacity-50 rounded-md flex items-center justify-center">
-                        <Badge variant="destructive">Занят</Badge>
+                        <Badge variant="destructive">Dolu</Badge>
                       </div>
                     )}
                   </div>
@@ -55,8 +60,10 @@ export function CarSelection({ onCarSelect, selectedCarId }: CarSelectionProps) 
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold text-lg">{car.model}</h3>
-                      <Badge variant={car.available ? "default" : "destructive"}>
-                        {car.available ? "Доступен" : "Занят"}
+                      <Badge
+                        variant={car.available ? "default" : "destructive"}
+                      >
+                        {car.available ? "Uygun" : "Dolu"}
                       </Badge>
                     </div>
 
@@ -66,17 +73,17 @@ export function CarSelection({ onCarSelect, selectedCarId }: CarSelectionProps) 
                           className="w-3 h-3 rounded-full"
                           style={{
                             backgroundColor:
-                              car.color === "Белый"
+                              car.color === "Beyaz"
                                 ? "#ffffff"
-                                : car.color === "Черный"
-                                  ? "#000000"
-                                  : car.color === "Красный"
-                                    ? "#ef4444"
-                                    : car.color === "Синий"
-                                      ? "#3b82f6"
-                                      : car.color === "Серебристый"
-                                        ? "#94a3b8"
-                                        : "#22c55e",
+                                : car.color === "Siyah"
+                                ? "#000000"
+                                : car.color === "Kırmızı"
+                                ? "#ef4444"
+                                : car.color === "Mavi"
+                                ? "#3b82f6"
+                                : car.color === "Gümüş"
+                                ? "#94a3b8"
+                                : "#22c55e",
                           }}
                         ></div>
                         <span>{car.color}</span>
@@ -98,14 +105,22 @@ export function CarSelection({ onCarSelect, selectedCarId }: CarSelectionProps) 
                     {/* Pricing */}
                     <div className="border-t pt-2 space-y-1">
                       <div className="flex justify-between text-sm">
-                        <span>За день:</span>
+                        <span>Günlük:</span>
                         <span className="font-medium">
-                          {new Intl.NumberFormat("uz-UZ").format(car.pricePerDay)} сум
+                          {new Intl.NumberFormat("tr-TR").format(
+                            car.pricePerDay
+                          )}{" "}
+                          ₺
                         </span>
                       </div>
                       <div className="flex justify-between text-lg font-bold text-green-600">
-                        <span>Итого:</span>
-                        <span>{new Intl.NumberFormat("uz-UZ").format(car.totalPrice)} сум</span>
+                        <span>Toplam:</span>
+                        <span>
+                          {new Intl.NumberFormat("tr-TR").format(
+                            car.totalPrice
+                          )}{" "}
+                          ₺
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -116,5 +131,5 @@ export function CarSelection({ onCarSelect, selectedCarId }: CarSelectionProps) 
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
