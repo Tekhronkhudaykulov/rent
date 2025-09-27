@@ -11,17 +11,22 @@ import type { CreateDriverData, Driver } from "@/types/driver.types";
 import type { Car } from "@/types/car.types";
 import { mockDrivers } from "@/data/mock-data";
 import { UserPlus, Users, CheckCircle, UserCheck } from "lucide-react";
+import { DateRangeModal } from "./ui/date-range-modal";
 
 export function RentcarDashboard() {
   const [showDriverForm, setShowDriverForm] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [drivers, setDrivers] = useState<Driver[]>(mockDrivers);
   const [filteredDrivers, setFilteredDrivers] = useState<any>(mockDrivers);
-
-  console.log(filteredDrivers, "filteredDrivers");
-
+  const [selectDate, setSelectDate] = useState({
+    from: "",
+    to: "",
+  });
   const [selectedCar, setSelectedCar] = useState<Car | null>(null);
   const [selectedDriverId, setSelectedDriverId] = useState<string | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  console.log("selectDate", selectDate);
 
   const handleAddDriverClick = () => {
     setShowLoading(true);
@@ -51,22 +56,24 @@ export function RentcarDashboard() {
 
   const handleCarSelect = (car: Car) => {
     setSelectedCar(car);
+    setIsOpen(true);
   };
 
   const handleDriverSelect = (driverId: string) => {
     setSelectedDriverId(selectedDriverId === driverId ? null : driverId);
+    setIsOpen(true);
   };
 
   const handleCompleteRental = () => {
     const selectedDriver = drivers.find((d) => d.id === selectedDriverId);
     if (selectedCar && selectedDriver) {
-      alert(
-        `Kiralama başarıyla tamamlandı!\nSürücü: ${
-          selectedDriver.fullName
-        }\nAraç: ${selectedCar.model}\nToplam fiyat: ${new Intl.NumberFormat(
-          "tr-TR"
-        ).format(selectedCar.totalPrice)} ₺`
-      );
+      // alert(
+      //   `Kiralama başarıyla tamamlandı!\nSürücü: ${
+      //     selectedDriver.fullName
+      //   }\nAraç: ${selectedCar.model}\nToplam fiyat: ${new Intl.NumberFormat(
+      //     "tr-TR"
+      //   ).format(selectedCar.totalPrice)} ₺`
+      // );
       // Reset selections
       setSelectedCar(null);
       setSelectedDriverId(null);
@@ -74,9 +81,15 @@ export function RentcarDashboard() {
       alert("Lütfen kiralama için bir sürücü ve araç seçin");
     }
   };
-
+  const formatDateTR = (dateStr: string) => {
+    if (!dateStr) return "";
+    return new Intl.DateTimeFormat("tr-TR", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }).format(new Date(dateStr));
+  };
   const selectedDriver = drivers.find((d) => d.id === selectedDriverId);
-
   return (
     <>
       <CreativeLoading
@@ -127,6 +140,7 @@ export function RentcarDashboard() {
                         </Button>
                       </div>
                     </CardHeader>
+                    {/* driver */}
                     <CardContent>
                       {filteredDrivers.length === 0 ? (
                         <div className="text-center py-8 text-gray-500">
@@ -263,6 +277,23 @@ export function RentcarDashboard() {
                             </span>
                           </div>
                         )}
+
+                        {selectDate.from && selectDate.to && (
+                          <div className="flex flex-col gap-2">
+                            <div className="flex items-center justify-between">
+                              <span>Başlangıç Tarihi:</span>
+                              <span className="font-medium">
+                                {formatDateTR(selectDate.from)}
+                              </span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span>Bitiş Tarihi:</span>
+                              <span className="font-medium">
+                                {formatDateTR(selectDate.to)}
+                              </span>
+                            </div>
+                          </div>
+                        )}
                       </div>
 
                       <Button
@@ -284,6 +315,72 @@ export function RentcarDashboard() {
           </div>
         </div>
       </div>
+      {isOpen && selectedCar && selectedDriverId && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
+            {/* Close button */}
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+              onClick={() => {
+                setSelectedCar(null);
+                setSelectedDriverId(null);
+              }}
+            >
+              ✖
+            </button>
+
+            <h2 className="text-xl font-bold mb-4">Kiralama Tarihi</h2>
+
+            {/* Date inputs */}
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Başlangıç Tarihi
+                </label>
+                <input
+                  type="date"
+                  value={selectDate.from}
+                  onChange={(e) =>
+                    setSelectDate((prev) => ({ ...prev, from: e.target.value }))
+                  }
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Bitiş Tarihi
+                </label>
+                <input
+                  type="date"
+                  value={selectDate.to}
+                  onChange={(e) =>
+                    setSelectDate((prev) => ({ ...prev, to: e.target.value }))
+                  }
+                />
+              </div>
+            </div>
+
+            {/* Buttons */}
+            <div className="mt-6 flex justify-end gap-2">
+              <button
+                onClick={() => {
+                  setIsOpen(false);
+                }}
+                className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300"
+              >
+                Vazgeç
+              </button>
+              <button
+                onClick={() => {
+                  setIsOpen(false);
+                }}
+                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+              >
+                Onayla
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
