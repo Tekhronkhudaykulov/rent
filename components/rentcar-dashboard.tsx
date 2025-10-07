@@ -103,7 +103,7 @@ export function RentcarDashboard() {
         <div className="max-w-7xl mx-auto space-y-8">
           {/* Header */}
           <div className="text-center space-y-2">
-            <h1 className="text-4xl font-bold text-gray-900">RENTCAR CRM</h1>
+            <h1 className="text-4xl font-bold text-gray-900">RENTCAR </h1>
             <p className="text-lg text-gray-600">
               Car rental management system
             </p>
