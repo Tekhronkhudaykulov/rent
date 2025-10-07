@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     siteName: "RENTCAR",
   },
-  metadataBase: new URL("rent-rosy-two.vercel.app"),
+  metadataBase: new URL("https://rent-rosy-two.vercel.app/"),
 };
 
 export default function RootLayout({
