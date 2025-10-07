@@ -6,9 +6,15 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "RENTCAR  - Car Rental Management System",
+  title: "RENTCAR - Car Rental Management System",
   description: "A professional car rental management system with drivers",
-  generator: "v0.app",
+  openGraph: {
+    title: "RENTCAR - Car Rental Management System",
+    description: "A professional car rental management system with drivers",
+    locale: "en_US",
+    siteName: "RENTCAR",
+  },
+  metadataBase: new URL("rent-rosy-two.vercel.app"),
 };
 
 export default function RootLayout({
