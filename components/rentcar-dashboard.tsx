@@ -68,28 +68,30 @@ export function RentcarDashboard() {
     const selectedDriver = drivers.find((d) => d.id === selectedDriverId);
     if (selectedCar && selectedDriver) {
       // alert(
-      //   `Kiralama başarıyla tamamlandı!\nSürücü: ${
+      //   `Rental successfully completed!\nDriver: ${
       //     selectedDriver.fullName
-      //   }\nAraç: ${selectedCar.model}\nToplam fiyat: ${new Intl.NumberFormat(
-      //     "tr-TR"
+      //   }\nCar: ${selectedCar.model}\nTotal Price: ${new Intl.NumberFormat(
+      //     "en-US"
       //   ).format(selectedCar.totalPrice)} ₺`
       // );
-      // Reset selections
       setSelectedCar(null);
       setSelectedDriverId(null);
     } else {
-      alert("Lütfen kiralama için bir sürücü ve araç seçin");
+      alert("Please select both a driver and a car to complete the rental");
     }
   };
-  const formatDateTR = (dateStr: string) => {
+
+  const formatDateEN = (dateStr: string) => {
     if (!dateStr) return "";
-    return new Intl.DateTimeFormat("tr-TR", {
+    return new Intl.DateTimeFormat("en-US", {
       year: "numeric",
       month: "long",
       day: "numeric",
     }).format(new Date(dateStr));
   };
+
   const selectedDriver = drivers.find((d) => d.id === selectedDriverId);
+
   return (
     <>
       <CreativeLoading
@@ -103,7 +105,7 @@ export function RentcarDashboard() {
           <div className="text-center space-y-2">
             <h1 className="text-4xl font-bold text-gray-900">RENTCAR CRM</h1>
             <p className="text-lg text-gray-600">
-              Araç kiralama yönetim sistemi
+              Car rental management system
             </p>
           </div>
 
@@ -123,11 +125,11 @@ export function RentcarDashboard() {
                         <CardTitle className="flex items-center gap-2">
                           <Users className="h-6 w-6 hidden md:inline" />
                           <span className="hidden md:inline">
-                            Sürücüler ({drivers.length})
+                            Drivers ({drivers.length})
                           </span>
                           {selectedDriverId && (
                             <span className="text-sm text-green-600 font-normal">
-                              - seçilen: {selectedDriver?.fullName}
+                              - selected: {selectedDriver?.fullName}
                             </span>
                           )}
                         </CardTitle>
@@ -136,10 +138,11 @@ export function RentcarDashboard() {
                           className="flex items-center gap-2 md:w-max w-full"
                         >
                           <UserPlus className="h-4 w-4" />
-                          Sürücü ekle
+                          Add Driver
                         </Button>
                       </div>
                     </CardHeader>
+
                     {/* driver */}
                     <CardContent>
                       {filteredDrivers.length === 0 ? (
@@ -147,8 +150,8 @@ export function RentcarDashboard() {
                           <Users className="h-12 w-12 mx-auto mb-4 opacity-50" />
                           <p>
                             {drivers.length === 0
-                              ? "Hiç sürücü eklenmedi"
-                              : "Filtrelere uygun sürücü bulunamadı"}
+                              ? "No drivers added yet"
+                              : "No drivers found for the applied filters"}
                           </p>
                         </div>
                       ) : (
@@ -187,11 +190,12 @@ export function RentcarDashboard() {
                                     {filteredDrivers[0].fullName}
                                   </h3>
                                   <p className="text-xs text-gray-600">
-                                    Pasaport:{" "}
+                                    Passport:{" "}
                                     {filteredDrivers[0].passportSeries}
                                   </p>
                                   <p className="text-xs text-gray-600">
-                                    Ehliyet: {filteredDrivers[0].driverLicense}
+                                    Driver License:{" "}
+                                    {filteredDrivers[0].driverLicense}
                                   </p>
                                   <p className="text-xs text-gray-600">
                                     {filteredDrivers[0].citizenship}
@@ -199,7 +203,7 @@ export function RentcarDashboard() {
                                 </div>
                                 {selectedDriverId === filteredDrivers[0].id && (
                                   <div className="text-green-600 font-medium text-sm">
-                                    Aktif
+                                    Active
                                   </div>
                                 )}
                               </div>
@@ -235,13 +239,13 @@ export function RentcarDashboard() {
                       <div className="flex items-center gap-2">
                         <CheckCircle className="h-6 w-6 text-green-600" />
                         <h3 className="font-semibold text-green-800">
-                          İşlem durumu
+                          Rental Status
                         </h3>
                       </div>
 
                       <div className="space-y-2 text-sm">
                         <div className="flex items-center justify-between">
-                          <span>Sürücü:</span>
+                          <span>Driver:</span>
                           <span
                             className={
                               selectedDriverId
@@ -251,11 +255,11 @@ export function RentcarDashboard() {
                           >
                             {selectedDriver
                               ? selectedDriver.fullName
-                              : "Seçilmedi"}
+                              : "Not selected"}
                           </span>
                         </div>
                         <div className="flex items-center justify-between">
-                          <span>Araç:</span>
+                          <span>Car:</span>
                           <span
                             className={
                               selectedCar
@@ -263,14 +267,14 @@ export function RentcarDashboard() {
                                 : "text-gray-500"
                             }
                           >
-                            {selectedCar ? selectedCar.model : "Seçilmedi"}
+                            {selectedCar ? selectedCar.model : "Not selected"}
                           </span>
                         </div>
                         {selectedCar && (
                           <div className="flex items-center justify-between">
-                            <span>Fiyat:</span>
+                            <span>Price:</span>
                             <span className="text-green-600 font-bold">
-                              {new Intl.NumberFormat("tr-TR").format(
+                              {new Intl.NumberFormat("en-US").format(
                                 selectedCar.totalPrice
                               )}{" "}
                               ₺
@@ -281,15 +285,15 @@ export function RentcarDashboard() {
                         {selectDate.from && selectDate.to && (
                           <div className="flex flex-col gap-2">
                             <div className="flex items-center justify-between">
-                              <span>Başlangıç Tarihi:</span>
+                              <span>Start Date:</span>
                               <span className="font-medium">
-                                {formatDateTR(selectDate.from)}
+                                {formatDateEN(selectDate.from)}
                               </span>
                             </div>
                             <div className="flex items-center justify-between">
-                              <span>Bitiş Tarihi:</span>
+                              <span>End Date:</span>
                               <span className="font-medium">
-                                {formatDateTR(selectDate.to)}
+                                {formatDateEN(selectDate.to)}
                               </span>
                             </div>
                           </div>
@@ -302,10 +306,10 @@ export function RentcarDashboard() {
                         className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400"
                       >
                         {selectedCar && selectedDriverId
-                          ? "Kiralamayı tamamla"
-                          : `Seçiniz ${!selectedDriverId ? "sürücü" : ""}${
-                              !selectedDriverId && !selectedCar ? " ve " : ""
-                            }${!selectedCar ? "araç" : ""}`}
+                          ? "Complete Rental"
+                          : `Select ${!selectedDriverId ? "driver" : ""}${
+                              !selectedDriverId && !selectedCar ? " and " : ""
+                            }${!selectedCar ? "car" : ""}`}
                       </Button>
                     </div>
                   </CardContent>
@@ -315,6 +319,8 @@ export function RentcarDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Date Selection Modal */}
       {isOpen && selectedCar && selectedDriverId && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
@@ -329,13 +335,13 @@ export function RentcarDashboard() {
               ✖
             </button>
 
-            <h2 className="text-xl font-bold mb-4">Kiralama Tarihi</h2>
+            <h2 className="text-xl font-bold mb-4">Rental Dates</h2>
 
             {/* Date inputs */}
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Başlangıç Tarihi
+                  Start Date
                 </label>
                 <input
                   type="date"
@@ -347,7 +353,7 @@ export function RentcarDashboard() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Bitiş Tarihi
+                  End Date
                 </label>
                 <input
                   type="date"
@@ -367,7 +373,7 @@ export function RentcarDashboard() {
                 }}
                 className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300"
               >
-                Vazgeç
+                Cancel
               </button>
               <button
                 onClick={() => {
@@ -375,7 +381,7 @@ export function RentcarDashboard() {
                 }}
                 className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
               >
-                Onayla
+                Confirm
               </button>
             </div>
           </div>

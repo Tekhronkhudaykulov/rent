@@ -20,7 +20,8 @@ export function CarSelection({
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <CarIcon className="h-6 w-6" />
-          Araç Seçimi ({mockCars.filter((car) => car.available).length} uygun)
+          Car Selection ({mockCars.filter((car) => car.available).length}{" "}
+          available)
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -51,7 +52,7 @@ export function CarSelection({
                     )}
                     {!car.available && (
                       <div className="absolute inset-0 bg-black bg-opacity-50 rounded-md flex items-center justify-center">
-                        <Badge variant="destructive">Dolu</Badge>
+                        <Badge variant="destructive">Unavailable</Badge>
                       </div>
                     )}
                   </div>
@@ -63,7 +64,7 @@ export function CarSelection({
                       <Badge
                         variant={car.available ? "default" : "destructive"}
                       >
-                        {car.available ? "Uygun" : "Dolu"}
+                        {car.available ? "Available" : "Unavailable"}
                       </Badge>
                     </div>
 
@@ -73,15 +74,15 @@ export function CarSelection({
                           className="w-3 h-3 rounded-full"
                           style={{
                             backgroundColor:
-                              car.color === "Beyaz"
+                              car.color === "White"
                                 ? "#ffffff"
-                                : car.color === "Siyah"
+                                : car.color === "Black"
                                 ? "#000000"
-                                : car.color === "Kırmızı"
+                                : car.color === "Red"
                                 ? "#ef4444"
-                                : car.color === "Mavi"
+                                : car.color === "Blue"
                                 ? "#3b82f6"
-                                : car.color === "Gümüş"
+                                : car.color === "Silver"
                                 ? "#94a3b8"
                                 : "#22c55e",
                           }}
@@ -105,18 +106,18 @@ export function CarSelection({
                     {/* Pricing */}
                     <div className="border-t pt-2 space-y-1">
                       <div className="flex justify-between text-sm">
-                        <span>Günlük:</span>
+                        <span>Daily:</span>
                         <span className="font-medium">
-                          {new Intl.NumberFormat("tr-TR").format(
+                          {new Intl.NumberFormat("en-US").format(
                             car.pricePerDay
                           )}{" "}
                           ₺
                         </span>
                       </div>
                       <div className="flex justify-between text-lg font-bold text-green-600">
-                        <span>Toplam:</span>
+                        <span>Total:</span>
                         <span>
-                          {new Intl.NumberFormat("tr-TR").format(
+                          {new Intl.NumberFormat("en-US").format(
                             car.totalPrice
                           )}{" "}
                           ₺

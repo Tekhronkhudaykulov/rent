@@ -31,7 +31,7 @@ export function DriverFilter({
   useEffect(() => {
     let filtered = drivers;
 
-    // Arama filtresi (isim, pasaport, ehliyet)
+    // Search filter (name, passport, license)
     if (searchTerm) {
       filtered = filtered.filter(
         (driver) =>
@@ -43,7 +43,7 @@ export function DriverFilter({
       );
     }
 
-    // Vatandaşlık filtresi
+    // Citizenship filter
     if (selectedCitizenship !== "all") {
       filtered = filtered.filter(
         (driver) => driver.citizenship === selectedCitizenship
@@ -67,10 +67,10 @@ export function DriverFilter({
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-lg">
             <Filter className="h-5 w-5 text-blue-600" />
-            Sürücü Filtresi
+            Driver Filter
             {hasActiveFilters && (
               <span className="text-sm font-normal text-blue-600">
-                ({filteredCount} bulundu)
+                ({filteredCount} found)
               </span>
             )}
           </CardTitle>
@@ -83,12 +83,12 @@ export function DriverFilter({
             {isExpanded ? (
               <>
                 <ChevronUp className="h-4 w-4 mr-1" />
-                Gizle
+                Hide
               </>
             ) : (
               <>
                 <ChevronDown className="h-4 w-4 mr-1" />
-                Göster
+                Show
               </>
             )}
           </Button>
@@ -98,13 +98,15 @@ export function DriverFilter({
       {isExpanded && (
         <CardContent className="pt-0">
           <div className="space-y-4">
-            {/* Arama Kutusu */}
+            {/* Search Box */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Arama</label>
+              <label className="text-sm font-medium text-gray-700">
+                Search
+              </label>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
-                  placeholder="İsim, pasaport veya ehliyet ile ara..."
+                  placeholder="Search by name, passport, or license..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10"
@@ -112,20 +114,20 @@ export function DriverFilter({
               </div>
             </div>
 
-            {/* Vatandaşlık Filtresi */}
+            {/* Citizenship Filter */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">
-                Vatandaşlık
+                Citizenship
               </label>
               <Select
                 value={selectedCitizenship}
                 onValueChange={setSelectedCitizenship}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Tüm ülkeler" />
+                  <SelectValue placeholder="All countries" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Tüm ülkeler</SelectItem>
+                  <SelectItem value="all">All countries</SelectItem>
                   {citizenshipOptions.map((citizenship) => (
                     <SelectItem key={citizenship} value={citizenship}>
                       {citizenship}
@@ -135,7 +137,7 @@ export function DriverFilter({
               </Select>
             </div>
 
-            {/* Filtreleri Temizle Butonu */}
+            {/* Clear Filters Button */}
             {hasActiveFilters && (
               <Button
                 variant="outline"
@@ -144,7 +146,7 @@ export function DriverFilter({
                 className="w-full text-gray-600 hover:text-gray-700 bg-transparent"
               >
                 <X className="h-4 w-4 mr-2" />
-                Filtreleri Temizle
+                Clear Filters
               </Button>
             )}
           </div>

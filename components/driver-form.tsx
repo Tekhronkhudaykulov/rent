@@ -49,14 +49,14 @@ export function DriverForm({ onSubmit, onCancel }: DriverFormProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <User className="h-6 w-6" />
-          Sürücü ekle
+          Add Driver
         </CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Photo Upload */}
           <div className="space-y-2">
-            <label className="text-sm font-medium">Sürücü fotoğrafı</label>
+            <label className="text-sm font-medium">Driver Photo</label>
             <div className="flex items-center space-x-4">
               <div className="relative">
                 <img
@@ -79,28 +79,28 @@ export function DriverForm({ onSubmit, onCancel }: DriverFormProps) {
                 />
               </div>
               <div className="text-sm text-gray-600">
-                <p>Fotoğrafı değiştirmek için tıklayın</p>
-                <p className="text-xs">Desteklenen formatlar: JPG, PNG</p>
+                <p>Click to change the photo</p>
+                <p className="text-xs">Supported formats: JPG, PNG</p>
               </div>
             </div>
           </div>
 
           {/* Full Name */}
           <div className="space-y-2">
-            <label className="text-sm font-medium">Ad Soyad</label>
+            <label className="text-sm font-medium">Full Name</label>
             <Input
               value={formData.fullName}
               onChange={(e) =>
                 setFormData((prev) => ({ ...prev, fullName: e.target.value }))
               }
-              placeholder="Tam adı giriniz"
+              placeholder="Enter full name"
               required
             />
           </div>
 
           {/* Passport Series */}
           <div className="space-y-2">
-            <label className="text-sm font-medium">Pasaport Serisi</label>
+            <label className="text-sm font-medium">Passport Series</label>
             <Input
               value={formData.passportSeries}
               onChange={(e) =>
@@ -116,7 +116,9 @@ export function DriverForm({ onSubmit, onCancel }: DriverFormProps) {
 
           {/* Driver License */}
           <div className="space-y-2">
-            <label className="text-sm font-medium">Ehliyet Numarası</label>
+            <label className="text-sm font-medium">
+              Driver’s License Number
+            </label>
             <Input
               value={formData.driverLicense}
               onChange={(e) =>
@@ -132,7 +134,7 @@ export function DriverForm({ onSubmit, onCancel }: DriverFormProps) {
 
           {/* Citizenship */}
           <div className="space-y-2">
-            <label className="text-sm font-medium">Vatandaşlık</label>
+            <label className="text-sm font-medium">Citizenship</label>
             <Select
               value={formData.citizenship}
               onValueChange={(value) =>
@@ -140,7 +142,7 @@ export function DriverForm({ onSubmit, onCancel }: DriverFormProps) {
               }
             >
               <SelectTrigger>
-                <SelectValue placeholder="Vatandaşlık seçiniz" />
+                <SelectValue placeholder="Select citizenship" />
               </SelectTrigger>
               <SelectContent>
                 {citizenshipOptions.map((option) => (
@@ -155,7 +157,7 @@ export function DriverForm({ onSubmit, onCancel }: DriverFormProps) {
           {/* Action Buttons */}
           <div className="flex gap-4 pt-4">
             <Button type="submit" className="flex-1">
-              Sürücü ekle
+              Add Driver
             </Button>
             <Button
               type="button"
@@ -164,7 +166,7 @@ export function DriverForm({ onSubmit, onCancel }: DriverFormProps) {
               className="flex-1 bg-transparent"
             >
               <X className="h-4 w-4 mr-2" />
-              İptal
+              Cancel
             </Button>
           </div>
         </form>
